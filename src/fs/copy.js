@@ -1,11 +1,14 @@
 import fs from 'node:fs';
+import * as url from 'url';
 import path from 'node:path';
 
 import { FILES_COPY_PATH, FS_ERROR_TEXT, MAIN_FILE_PATH } from './constants.js';
 
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
 const copy = async () => {
-    const source = path.resolve(MAIN_FILE_PATH);
-    const target = path.resolve(FILES_COPY_PATH);
+    const source = path.join(__dirname, MAIN_FILE_PATH);
+    const target = path.join(__dirname, FILES_COPY_PATH);
     
     const join = (source, file) => path.join.call(null, source, file);
 

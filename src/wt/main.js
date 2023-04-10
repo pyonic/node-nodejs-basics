@@ -1,6 +1,9 @@
 import os from 'node:os';
 import path from 'node:path';
 import { Worker } from 'node:worker_threads';
+import * as url from 'url';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 /* Console logs for Error & Exit are optional */
 
@@ -11,7 +14,7 @@ const performCalculations = async () => {
 
     for(let i = 0; i < coresAmount; i++) {
         workerPromises.push(new Promise((resolve, _) => {
-                    const worker = new Worker(path.resolve('./worker.js'), { workerData: null });
+                    const worker = new Worker(path.join(__dirname, './worker.js'), { workerData: null });
 
                     worker.on('message', (value) => {
                         // console.log(`Received value from worker (${i}) for value ${workerDataNum} => ${value}`);
