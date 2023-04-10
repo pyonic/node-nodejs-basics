@@ -1,5 +1,19 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import * as url from 'url';
+
+import { FS_ERROR_TEXT, MAIN_FILE_PATH } from './constants.js';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
 const list = async () => {
-    // Write your code here 
+    const source = path.join(__dirname, MAIN_FILE_PATH);
+
+    fs.access(source, async (err) => {
+        if (err) throw new Error(FS_ERROR_TEXT);
+        const files = await fs.promises.readdir(source);
+        console.log(`Content: \n ${files.join('\n ')}`);
+    })
 };
 
 await list();
